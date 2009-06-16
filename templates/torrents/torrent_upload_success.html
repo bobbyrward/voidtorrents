@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }}: Torrent Uploaded Successfully{% endblock %}
+
+{% block tabs %}
+  {% with "Torrents" as current_tab %}
+    {{block.super}}
+  {%endwith%}
+{%endblock%}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+  <div class="content-section">
+    <h3>Torrent Uploaded Successfully}</h3>
+    <span class="news-entry-date">{{newsitem.added|date:"N j Y g:i A"}}</span>
+    <hr />
+    <div class="news-entry-body">
+      {{newsitem.body|safe}}
+    </div>
+  </div>
+{% endblock %}
+
+
+

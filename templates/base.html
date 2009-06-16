@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% load get_latest %}
+{% load messages %}
+{% load tracker_stats %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Void Torrents{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" /> 
+    <link rel="stylesheet" type="text/css" href="/media/uni_form/uni-form-generic.css" />
+    <link rel="stylesheet" type="text/css" href="/media/uni_form/uni-form.css" />
+    <link rel="stylesheet" type="text/css" href="/media/css/base.css?ts=042309-2249" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/media/uni_form/uni-form.jquery.js"></script>
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    <div id="doc3" class="yui-t6">
+      <div id="hd">
+        <div id="title">
+          <a href="{% url index %}"><h1>voidtorrents.info</h1></a>
+        </div>
+        <ul id="nav">
+          {% block tabs %}
+          <li {%ifequal current_tab "Home"%}class="current"{%endifequal%}>
+            <a href="{% url index %}">Home</a>
+          </li>
+          <li {%ifequal current_tab "Torrents"%}class="current"{%endifequal%}>
+            <a href="{% url torrent_list %}">Torrents</a>
+          </li>
+          <li {%ifequal current_tab "Forum"%}class="current"{%endifequal%}>
+            <a href="/forum/">Forums</a>
+          </li>
+          <li {%ifequal current_tab "Profile"%}class="current"{%endifequal%}>
+            <a href="/accounts/profile/">Profile</a>
+          </li>
+          <li {%ifequal current_tab "About"%}class="current"{%endifequal%}>
+            <a href="{% url about %}">About</a>
+          </li>
+          {% endblock %}
+        </ul>
+      </div>
+      <div id="bd">
+        <div id="yui-main">
+          <div class="yui-b"> 
+            <div class="yui-g content">
+              {% block content %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+        <div class="yui-b" id="sidebar">
+            <div class="sidebar-section">
+              <h2>{{user.username}}</h2>
+              <hr />
+              <div class="messages">
+                {% get_inbox_count as message_count %}
+                <a href="{% url messages_inbox %}" title="{{message_count}} messages" >
+                  {{message_count}}
+                  {% ifequal message_count 0 %}
+                    <img class="messages-indicator" src="/media/img/no-messages.png" alt="no new messages" />
+                  {% else %}
+                    <img class="messages-indicator" src="/media/img/unread-messages.png" alt="{{message_count}} new messages" />
+                  {% endifequal %}
+                </a>
+              </div>
+              <table class="user-stats-table">
+                {% get_user_tracker_stats as tracker_stats %}
+                <!-- {{tracker_stats}} -->
+                <tr>
+                  <td>Ratio:</td>
+                  <td>{{tracker_stats.ratio}}</td>
+                </tr>
+                <tr>
+                  <td>Uploaded:</td>
+                  <td>{{tracker_stats.uploaded|filesizeformat}}</td>
+                </tr>
+                <tr>
+                  <td>Downloaded:</td>
+                  <td>{{tracker_stats.downloaded|filesizeformat}}</td>
+                </tr>
+              </table>
+              <ul class="content latest-list">
+                <li><a href="{% url account_logout %}">Logout</a></li>
+              </ul>
+            </div>
+          {% block sidebar %}
+            <div class="sidebar-section">
+              <h2>Latest News</h2>
+              <hr />
+              <ul class="content latest-list">
+                {% get_latest sitenews.SiteNewsItem 5 as recent_sitenews %}
+                {% for news in recent_sitenews %}
+                  <li><a href="{% url sitenews_view news.id %}">{{news.title}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="sidebar-section">
+              <h2>Latest Torrents</h2>
+              <hr />
+              <ul class="content latest-list">
+                {% get_latest torrents.Torrent 5 as recent_torrents %}
+                {% for torrent in recent_torrents %}
+                    <li><a href="{% url torrent_view object_id=torrent.id %}">{{torrent.name}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endblock %}
+        </div>
+      </div>
+      <div id="ft">
+        &copy; 2009 <a href="mailto: null@voidtorrents.info">null</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }}: Torrent - {{object.name}}{% endblock %}
+
+
+{% block tabs %}
+  {% with "Torrents" as current_tab %}
+    {{block.super}}
+  {%endwith%}
+{%endblock%}
+
+{% block head %}
+{% endblock %}
+
+{% block sidebar %}
+  <div class="sidebar-section">
+    <h2>Actions</h2>
+    <hr />
+    <ul class="content action-list">
+        <li><img src="/media/img/save.png" alt="" /><a href="{% url torrent_download object.id %}">Download this torrent</a></li>
+    </ul>
+  </div>
+
+  {{block.super}}
+{% endblock %}
+
+{% block content %}
+  <div class="content-section torrent-details">
+    <div class="torrent-stats">
+      <dl>
+        <dt>Size</dt>
+        <dd>{{object.filesize|filesizeformat}}</dd>
+        <dt>Seeders</dt>
+        <dd>{{object.seeders}}</dd>
+        <dt>Leechers</dt>
+        <dd>{{object.leechers}}</dd>
+        <dt>Times Completed</dt>
+        <dd>{{object.times_completed}}</dd>
+        <dt>Last Action</dt>
+        <dd>{{object.last_action}}</dd>
+      </dl>
+    </div>
+    <dl>
+      <dt>Name</dt>
+      <dd>{{object.name}}</dd>
+      <dt>Description</dt>
+      <dd>{{object.description}}</dd>
+      <dt>Date Added</dt>
+      <dd>{{object.added}}</dd>
+      <dt>Uploaded By</dt>
+      <dd>{{object.owner.username}}</dd>
+      <dt>Info Hash</dt>
+      <dd>{{object.info_hash}}</dd>
+      <dt>Filename</dt>
+      <dd>{{object.filename}}</dd>
+      <dt>Number of Files</dt>
+      <dd>{{object.filecount}}</dd>
+    </dl>
+  </div>
+{% endblock %}
+
+
+

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load uni_form %}
+
+{% block title %}{{ block.super }}: Upload Torrent{% endblock %}
+
+{% block tabs %}
+  {% with "Torrents" as current_tab %}
+    {{block.super}}
+  {%endwith%}
+{%endblock%}
+
+
+{% block head %}
+<style type="text/css">
+.uniForm .inlineLabel em{ left: 10px !important; }
+.uniForm .inlineLabels .ctrlHolder .multiField.phoneNum .blockLabel{ width: auto; }
+.uniForm .inlineLabels .ctrlHolder .multiField .blockLabel #phone_ccode.textInput,
+.uniForm .inlineLabels .ctrlHolder .multiField .blockLabel #phone_area.textInput{ width: 4em; }
+</style>
+{% endblock %}
+
+{% block content %}
+  <form {% if form.is_multipart %}enctype="multipart/form-data"{% endif %} method="post" action="">
+  <div class="content-section form-section uniForm">
+    <h3>Upload Torrent</h3>
+    <hr />
+    <fieldset>
+      {{form|as_uni_form}}
+    </fieldset>
+    
+    <div class="buttonHolder">
+      <button type="submit" class="primaryAction">Submit</button>
+    </div>
+  </div>
+  </form>
+{% endblock %}
+
+

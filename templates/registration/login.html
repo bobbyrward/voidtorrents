@@ -1,0 +1,68 @@
+{% extends "anonymous_base.html" %}
+
+
+{% block title %}{{ block.super }}: Login{% endblock %}
+
+{% block head %}
+<style type="text/css">
+#bd {
+  text-align: center;
+}
+
+#bd .login-form {
+  width: 25%;
+  margin: 32px auto;
+  text-align: left;
+  position: relative;
+}
+
+#bd .login-form table {
+  margin: 0 16px;
+
+}
+
+#bd .login-form ul.errorlist{
+  color: #FF0000;
+  margin: 16px 0;
+  text-align: center;
+}
+
+#bd .login-form input {
+  margin: 8px 8px;
+}
+
+#bd .login-form .buttonHolder {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+</style>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="login-form content-section">
+  <form action="{% url django.contrib.auth.views.login %}" method="post">
+    <h3>Login</h3>
+    <hr />
+    <table>
+      {{form.as_table}}
+    </table>
+    
+    <div class="buttonHolder">
+      <button type="submit" class="primaryAction">Submit</button>
+    </div>
+    <hr style="margin: 16px 0"/>
+    <div style="text-align:center">
+      Use test for both username and password.
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+
+

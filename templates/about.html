@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load webdesign %}
+
+{% block title %}{{ block.super }}: About{% endblock %}
+
+{% block tabs %}
+  {% with "About" as current_tab %}
+    {{block.super}}
+  {%endwith%}
+{%endblock%}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+  <div class="content-section">
+    <h3>About</h3>
+    <hr />
+    <p>
+      This site aims to be a working torrent tracker but more importantly it is a set of reusable django apps.
+    </p>
+    <p>
+      This site hopes to improve not only Django with reusable torrent and tracker apps but to improve private trackers
+      in general.  Hopefully we can raise the bar from the mess that is torrenttrader.
+    </p>
+  </div>
+
+{% endblock %}
+
+{% block sidebar %}
+  {{block.super}}
+{% endblock %}
+
+{% comment  %}
+Need to show 
+  * site news
+  * poll
+  * basic stats
+  * shoutbox
+
+Row 1
+  site
+
+{% endcomment %}
+
+

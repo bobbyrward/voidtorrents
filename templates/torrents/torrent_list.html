@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }}: Browse Torrents{% endblock %}
+
+{% block tabs %}
+  {% with "Torrents" as current_tab %}
+    {{block.super}}
+  {%endwith%}
+{%endblock%}
+
+
+{% block head %}
+{% endblock %}
+
+{% block sidebar %}
+  <div class="sidebar-section">
+    <h2>Torrents</h2>
+    <hr />
+    <ul class="content">
+      <li><a href="{% url torrent_upload %}">Upload a torrent</a></li>
+    </ul>
+  </div>
+
+  {{block.super}}
+{% endblock %}
+
+{% block content %}
+  <table class="torrent-list content-section">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th></th>
+        <th>S</th>
+        <th>L</th>
+        <th>File Count</th>
+        <th>Date Added</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for torrent in object_list %}
+      <tr>
+        <td>
+          <a href="{% url torrent_view torrent.id %}">{{torrent.name}}</a>
+        </td>
+        <td>{{torrent.filesize|filesizeformat}}</td>
+        <td><a href="{%url torrent_download torrent.id %}"><img src="/media/img/save.png" alt="" /></a></td>
+        <td>{{torrent.seeders}}</td>
+        <td>{{torrent.leechers}}</td>
+        <td>{{torrent.filecount}}</td>
+        <td>{{torrent.added|date:"N j Y g:i A"}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
